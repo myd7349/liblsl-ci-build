@@ -47,7 +47,9 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install gcc-${{ matrix.config.gcc }}
+          sudo apt-get install g++-${{ matrix.config.gcc }}
           echo "ARM_C_COMPILER=${{ matrix.config.gcc }}-gcc" >> $GITHUB_ENV
+          echo "ARM_CXX_COMPILER=${{ matrix.config.gcc }}-g++" >> $GITHUB_ENV
 
       - name: Configure
         run: >
@@ -56,6 +58,7 @@ jobs:
           -B build
           -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
           ${{ matrix.config.arch == 'x64' && '-DCMAKE_C_COMPILER=gcc' || '-DCMAKE_C_COMPILER=$ARM_C_COMPILER' }}
+          ${{ matrix.config.arch == 'x64' && '-DCMAKE_CXX_COMPILER=g++' || '-DCMAKE_CXX_COMPILER=$ARM_CXX_COMPILER' }}
           -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_PREFIX }}
           -DLSL_BUILD_STATIC=OFF
 
