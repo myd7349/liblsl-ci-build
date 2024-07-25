@@ -19,7 +19,6 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        generator: Visual Studio 17 2022
         config:
           - rid: win-arm64
             arch: ARM64
@@ -29,6 +28,8 @@ jobs:
 
           - rid: win-x86
             arch: Win32
+        include:
+          - generator: Visual Studio 17 2022
 
     steps:
       - name: Checkout
