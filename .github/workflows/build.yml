@@ -95,7 +95,6 @@ jobs:
         -DENABLE_BITCODE=OFF \
         -DENABLE_ARC=OFF \
         -DARCHS="arm64" \
-        -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }} \
         -DLSL_BUILD_STATIC=OFF \
 
     steps:
@@ -124,7 +123,7 @@ jobs:
 
       - name: Configure with install prefix
         run: |
-          cmake ${{ env.COMMON_CMAKE_OPTIONS }} -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_PREFIX }}
+          cmake ${{ env.COMMON_CMAKE_OPTIONS }} -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }} -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_PREFIX }}
 
       - name: Build & Install
         run: |
