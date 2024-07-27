@@ -118,7 +118,7 @@ jobs:
       - name: Build & Install
         run: |
           pushd build
-          make install
+          sudo make install
           popd
 
       - name: Configure with install prefix
