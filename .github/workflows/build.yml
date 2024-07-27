@@ -85,6 +85,18 @@ jobs:
         config:
           - rid: ios-arm64
             arch: arm64
+    env:
+      COMMON_CMAKE_OPTIONS: |
+        -S liblsl \
+        -B build \
+        -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/toolchains/ios.toolchain.cmake \
+        -DPLATFORM=OS \
+        -DDEPLOYMENT_TARGET="13.0" \
+        -DENABLE_BITCODE=OFF \
+        -DENABLE_ARC=OFF \
+        -DARCHS="arm64" \
+        -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }} \
+        -DLSL_BUILD_STATIC=OFF \
 
     steps:
       - name: Checkout
@@ -101,19 +113,18 @@ jobs:
         run: uname -m
 
       - name: Configure
-        run: >
-          cmake
-          -S liblsl
-          -B build
-          -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/toolchains/ios.toolchain.cmake
-          -DPLATFORM=OS
-          -DDEPLOYMENT_TARGET="13.0"
-          -DENABLE_BITCODE=OFF
-          -DENABLE_ARC=OFF
-          -DARCHS="arm64"
-          -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
-          -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_PREFIX }}
-          -DLSL_BUILD_STATIC=OFF
+        run: |
+          cmake ${{ env.COMMON_CMAKE_OPTIONS }}
+
+      - name: Build & Install
+        run: |
+          pushd build
+          make install
+          popd
+
+      - name: Configure with install prefix
+        run: |
+          cmake ${{ env.COMMON_CMAKE_OPTIONS }} -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_PREFIX }}
 
       - name: Build & Install
         run: |
@@ -349,3 +360,5 @@ jobs:
 # https://github.com/Slackadays/Clipboard/blob/main/.github/workflows/build-clipboard.yml
 # https://learn.microsoft.com/en-us/dotnet/core/rid-catalog
 # https://github.com/actions/checkout/issues/785
+# https://github.com/GenericMappingTools/gmt/issues/4481
+# [Can't use fixup_bundle() to create a portable bundle with Qt](https://stackoverflow.com/questions/17974439/cant-use-fixup-bundle-to-create-a-portable-bundle-with-qt)
