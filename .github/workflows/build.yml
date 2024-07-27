@@ -120,7 +120,7 @@ jobs:
           pushd build
           make lsl
           popd
-          mkdir ./${{ env.INSTALL_PREFIX }}/lib
+          mkdir -p ./${{ env.INSTALL_PREFIX }}/lib
           cp ./build/*.dylib ./${{ env.INSTALL_PREFIX }}/lib
 
       - name: Run file command
@@ -351,3 +351,4 @@ jobs:
 # https://github.com/Slackadays/Clipboard/blob/main/.github/workflows/build-clipboard.yml
 # https://learn.microsoft.com/en-us/dotnet/core/rid-catalog
 # https://github.com/actions/checkout/issues/785
+# https://stackoverflow.com/questions/71389239/mac-terminal-is-it-possible-to-create-a-folder-of-folder
