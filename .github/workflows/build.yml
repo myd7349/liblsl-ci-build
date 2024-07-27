@@ -83,6 +83,10 @@ jobs:
       fail-fast: false
       matrix:
         config:
+          - rid: linux-arm
+            arch: arm
+            gcc: arm-linux-gnueabihf
+
           - rid: linux-arm64
             arch: arm64
             gcc: aarch64-linux-gnu
@@ -106,7 +110,7 @@ jobs:
         run: uname -m
 
       - name: Install gcc ${{ matrix.config.arch }} toolchain
-        if: ${{ matrix.config.arch == 'arm64' }}
+        if: ${{ matrix.config.arch == 'arm' || matrix.config.arch == 'arm64' }}
         run: |
           sudo apt-get update
           sudo apt-get install gcc-${{ matrix.config.gcc }}
@@ -281,4 +285,5 @@ jobs:
 # https://github.com/microsoft/vcpkg/tree/master/scripts/toolchains
 # https://github.com/nihui/opencv-mobile
 # https://github.com/sccn/liblsl/blob/master/.github/workflows/android.yml
+# https://github.com/Slackadays/Clipboard/blob/main/.github/workflows/build-clipboard.yml
 # https://learn.microsoft.com/en-us/dotnet/core/rid-catalog
