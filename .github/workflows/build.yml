@@ -74,6 +74,62 @@ jobs:
           name: liblsl-${{ env.LIBLSL_VERSION }}-${{ matrix.config.rid }}
           path: ${{ env.INSTALL_PREFIX }}
 
+  build-ios:
+    name: build-${{ matrix.config.rid }}
+    if: >-
+      github.event.pull_request.draft == false
+    runs-on: macOS-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - rid: ios-arm64
+            arch: arm64
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Clone liblsl
+        run: |
+          git clone https://github.com/sccn/liblsl.git
+          pushd liblsl
+          git checkout ${{ env.LIBLSL_VERSION }}
+          popd
+
+      - name: Run uname
+        run: uname -m
+
+      - name: Configure
+        run: >
+          cmake
+          -S liblsl
+          -B build
+          -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/toolchains/ios.toolchain.cmake
+          -DPLATFORM=OS
+          -DDEPLOYMENT_TARGET="13.0"
+          -DENABLE_BITCODE=OFF
+          -DENABLE_ARC=OFF
+          -DARCHS="arm64"
+          -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
+          -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_PREFIX }}
+          -DLSL_BUILD_STATIC=OFF
+
+      - name: Build & Install
+        run: |
+          pushd build
+          make install
+          popd
+
+      - name: Run file command
+        run: file ./${{ env.INSTALL_PREFIX }}/lib/*
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: liblsl-${{ env.LIBLSL_VERSION }}-${{ matrix.config.rid }}
+          path: ${{ env.INSTALL_PREFIX }}
+
   build-linux:
     name: build-${{ matrix.config.rid }}
     if: >-
@@ -252,7 +308,7 @@ jobs:
   release:
     if: startsWith(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
-    needs: [ build-android, build-linux, build-osx, build-windows ]
+    needs: [ build-android, build-ios, build-linux, build-osx, build-windows ]
 
     steps:
       - name: Download artifacts
@@ -263,7 +319,12 @@ jobs:
 
       - name: Create archives
         run: |
+          7z a liblsl-v${{ github.ref_name }}-android-arm-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-android-arm/*
           7z a liblsl-v${{ github.ref_name }}-android-arm64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-android-arm64/*
+          7z a liblsl-v${{ github.ref_name }}-android-x64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-android-x64/*
+          7z a liblsl-v${{ github.ref_name }}-android-x86-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-android-x86/*
+          7z a liblsl-v${{ github.ref_name }}-ios-arm64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-ios-arm64/*
+          7z a liblsl-v${{ github.ref_name }}-linux-arm-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-linux-arm/*
           7z a liblsl-v${{ github.ref_name }}-linux-arm64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-linux-arm64/*
           7z a liblsl-v${{ github.ref_name }}-linux-x64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-linux-x64/*
           7z a liblsl-v${{ github.ref_name }}-osx-arm64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-osx-arm64/*
@@ -287,3 +348,4 @@ jobs:
 # https://github.com/sccn/liblsl/blob/master/.github/workflows/android.yml
 # https://github.com/Slackadays/Clipboard/blob/main/.github/workflows/build-clipboard.yml
 # https://learn.microsoft.com/en-us/dotnet/core/rid-catalog
+# https://github.com/actions/checkout/issues/785
