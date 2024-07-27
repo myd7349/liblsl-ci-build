@@ -207,9 +207,6 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - rid: win-arm
-            arch: ARM
-
           - rid: win-arm64
             arch: ARM64
 
