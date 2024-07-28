@@ -323,21 +323,24 @@ jobs:
       - name: List downloaded files
         run: ls -R
 
+      - name: Print release version
+        run: echo ${{ github.ref_name }}
+
       - name: Create archives
         run: |
-          7z a liblsl-v${{ github.ref_name }}-android-arm-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-android-arm/*
-          7z a liblsl-v${{ github.ref_name }}-android-arm64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-android-arm64/*
-          7z a liblsl-v${{ github.ref_name }}-android-x64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-android-x64/*
-          7z a liblsl-v${{ github.ref_name }}-android-x86-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-android-x86/*
-          7z a liblsl-v${{ github.ref_name }}-ios-arm64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-ios-arm64/*
-          7z a liblsl-v${{ github.ref_name }}-linux-arm-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-linux-arm/*
-          7z a liblsl-v${{ github.ref_name }}-linux-arm64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-linux-arm64/*
-          7z a liblsl-v${{ github.ref_name }}-linux-x64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-linux-x64/*
-          7z a liblsl-v${{ github.ref_name }}-osx-arm64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-osx-arm64/*
-          7z a liblsl-v${{ github.ref_name }}-osx-x64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-osx-x64/*
-          7z a liblsl-v${{ github.ref_name }}-win-arm64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-win-arm64/*
-          7z a liblsl-v${{ github.ref_name }}-win-x64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-win-x64/*
-          7z a liblsl-v${{ github.ref_name }}-win-x86-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-win-x86/*
+          7z a liblsl-${{ env.LIBLSL_VERSION }}-android-arm-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-android-arm/*
+          7z a liblsl-${{ env.LIBLSL_VERSION }}-android-arm64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-android-arm64/*
+          7z a liblsl-${{ env.LIBLSL_VERSION }}-android-x64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-android-x64/*
+          7z a liblsl-${{ env.LIBLSL_VERSION }}-android-x86-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-android-x86/*
+          7z a liblsl-${{ env.LIBLSL_VERSION }}-ios-arm64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-ios-arm64/*
+          7z a liblsl-${{ env.LIBLSL_VERSION }}-linux-arm-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-linux-arm/*
+          7z a liblsl-${{ env.LIBLSL_VERSION }}-linux-arm64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-linux-arm64/*
+          7z a liblsl-${{ env.LIBLSL_VERSION }}-linux-x64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-linux-x64/*
+          7z a liblsl-${{ env.LIBLSL_VERSION }}-osx-arm64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-osx-arm64/*
+          7z a liblsl-${{ env.LIBLSL_VERSION }}-osx-x64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-osx-x64/*
+          7z a liblsl-${{ env.LIBLSL_VERSION }}-win-arm64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-win-arm64/*
+          7z a liblsl-${{ env.LIBLSL_VERSION }}-win-x64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-win-x64/*
+          7z a liblsl-${{ env.LIBLSL_VERSION }}-win-x86-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-win-x86/*
 
       - name: Release
         uses: softprops/action-gh-release@v2
