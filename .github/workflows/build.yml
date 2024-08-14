@@ -116,21 +116,15 @@ jobs:
           -G Xcode
           -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/toolchains/ios-cmake/ios.toolchain.cmake
           -DPLATFORM=${{ matrix.config.os }}
-          -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
           -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_PREFIX }}
           -DLSL_BUILD_STATIC=OFF
 
       - name: Build & Install
         run: |
           pushd build
-          make lsl
+          cmake --build . --config ${{ env.BUILD_TYPE }}
+          cmake --install . --config ${{ env.BUILD_TYPE }}
           popd
-          mkdir -p ./${{ env.INSTALL_PREFIX }}/include
-          cp -R ./liblsl/include ./${{ env.INSTALL_PREFIX }}/include
-          mkdir -p ./${{ env.INSTALL_PREFIX }}/lib
-          cp ./build/*.dylib ./${{ env.INSTALL_PREFIX }}/lib
-          mkdir -p ./${{ env.INSTALL_PREFIX }}/lib/cmake/LSL
-          cp ./build/LSL*.cmake ./${{ env.INSTALL_PREFIX }}/lib/cmake/LSL
 
       - name: Run file command
         run: file ./${{ env.INSTALL_PREFIX }}/lib/*
@@ -312,3 +306,4 @@ jobs:
 # https://stackoverflow.com/questions/71389239/mac-terminal-is-it-possible-to-create-a-folder-of-folder
 # https://stackoverflow.com/questions/9794694/how-to-copy-directories-in-os-x-10-7-3
 # https://github.com/leetal/ios-cmake
+# [CMake build fails with Xcode 12 and CMAKE_IOS_INSTALL_COMBINED=YES](https://stackoverflow.com/questions/65550550/cmake-build-fails-with-xcode-12-and-cmake-ios-install-combined-yes)
