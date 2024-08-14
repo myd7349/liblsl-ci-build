@@ -89,6 +89,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          submodules: true
 
       - name: Clone liblsl
         run: |
@@ -105,7 +107,7 @@ jobs:
           cmake
           -S liblsl
           -B build
-          -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/toolchains/ios.toolchain.cmake
+          -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/toolchains/ios-cmake/ios.toolchain.cmake
           -DPLATFORM=OS
           -DDEPLOYMENT_TARGET="13.0"
           -DENABLE_BITCODE=OFF
