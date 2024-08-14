@@ -121,8 +121,14 @@ jobs:
       - name: Build & Install
         run: |
           pushd build
-          make install
+          make lsl
           popd
+          mkdir -p ./${{ env.INSTALL_PREFIX }}/include
+          cp -R ./liblsl/include ./${{ env.INSTALL_PREFIX }}/include
+          mkdir -p ./${{ env.INSTALL_PREFIX }}/lib
+          cp ./build/*.dylib ./${{ env.INSTALL_PREFIX }}/lib
+          mkdir -p ./${{ env.INSTALL_PREFIX }}/lib/cmake/LSL
+          cp ./build/LSL*.cmake ./${{ env.INSTALL_PREFIX }}/lib/cmake/LSL
 
       - name: Run file command
         run: file ./${{ env.INSTALL_PREFIX }}/lib/*
@@ -305,3 +311,7 @@ jobs:
 # https://stackoverflow.com/questions/9794694/how-to-copy-directories-in-os-x-10-7-3
 # https://github.com/leetal/ios-cmake
 # [CMake build fails with Xcode 12 and CMAKE_IOS_INSTALL_COMBINED=YES](https://stackoverflow.com/questions/65550550/cmake-build-fails-with-xcode-12-and-cmake-ios-install-combined-yes)
+# [Xcode cannot find .dylib alias, even though it's there](https://stackoverflow.com/questions/70018925/xcode-cannot-find-dylib-alias-even-though-its-there)
+# [RPATH handling](https://gitlab.kitware.com/cmake/community/-/wikis/doc/cmake/RPATH-handling)
+# [BundleUtilities macOS: failure resolving library with @rpath when LC_RPATH isn't set](https://gitlab.kitware.com/cmake/cmake/-/issues/16625)
+# [What's the difference between CMAKE_INSTALL_PREFIX and CMAKE_INSTALL_RPATH](https://stackoverflow.com/questions/32047805/whats-the-difference-between-cmake-install-prefix-and-cmake-install-rpath)
