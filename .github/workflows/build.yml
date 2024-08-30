@@ -55,6 +55,7 @@ jobs:
           -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_LATEST_HOME/build/cmake/android.toolchain.cmake
           -DANDROID_ABI=${{ matrix.config.abi }}
           -DANDROID_PLATFORM=android-21
+          -DANDROID_STL=c++_shared
           -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
           -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_PREFIX }}
           -DLSL_BUILD_STATIC=OFF
@@ -316,3 +317,4 @@ jobs:
 # [RPATH handling](https://gitlab.kitware.com/cmake/community/-/wikis/doc/cmake/RPATH-handling)
 # [BundleUtilities macOS: failure resolving library with @rpath when LC_RPATH isn't set](https://gitlab.kitware.com/cmake/cmake/-/issues/16625)
 # [What's the difference between CMAKE_INSTALL_PREFIX and CMAKE_INSTALL_RPATH](https://stackoverflow.com/questions/32047805/whats-the-difference-between-cmake-install-prefix-and-cmake-install-rpath)
+# [why .so library become very big after compile with cmake?](https://stackoverflow.com/questions/47346448/why-so-library-become-very-big-after-compile-with-cmake)
