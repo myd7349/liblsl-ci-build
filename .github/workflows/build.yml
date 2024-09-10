@@ -127,8 +127,8 @@ jobs:
           pushd build
           make lsl
           popd
-          mkdir -p ./${{ env.INSTALL_PREFIX }}/include
-          cp -R ./liblsl/include ./${{ env.INSTALL_PREFIX }}/include
+          mkdir -p ./${{ env.INSTALL_PREFIX }}
+          cp -R ./liblsl/include ./${{ env.INSTALL_PREFIX }}
           mkdir -p ./${{ env.INSTALL_PREFIX }}/lib
           cp ./build/*.dylib ./${{ env.INSTALL_PREFIX }}/lib
           mkdir -p ./${{ env.INSTALL_PREFIX }}/lib/cmake/LSL
