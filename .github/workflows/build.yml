@@ -87,6 +87,9 @@ jobs:
           - rid: ios-arm64
             os: OS64
 
+          - rid: osx
+            os: MAC_UNIVERSAL
+
           - rid: osx-arm64
             os: MAC_ARM64
 
@@ -287,6 +290,7 @@ jobs:
           7z a liblsl-${{ env.LIBLSL_VERSION }}-linux-arm-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-linux-arm/*
           7z a liblsl-${{ env.LIBLSL_VERSION }}-linux-arm64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-linux-arm64/*
           7z a liblsl-${{ env.LIBLSL_VERSION }}-linux-x64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-linux-x64/*
+          7z a liblsl-${{ env.LIBLSL_VERSION }}-osx-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-osx/*
           7z a liblsl-${{ env.LIBLSL_VERSION }}-osx-arm64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-osx-arm64/*
           7z a liblsl-${{ env.LIBLSL_VERSION }}-osx-x64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-osx-x64/*
           7z a liblsl-${{ env.LIBLSL_VERSION }}-win-arm64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-win-arm64/*
