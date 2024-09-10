@@ -25,6 +25,7 @@ Linux:
 
 macOS:
 
+- osx
 - osx-arm64
 - osx-x64
 
