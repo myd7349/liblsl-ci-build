@@ -244,6 +244,18 @@ jobs:
           git checkout ${{ env.LIBLSL_VERSION }}
           popd
 
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Patch CMakeLists.txt
+        run: |
+          python ${{ github.workspace }}/patch_cmakelists.py liblsl/CMakeLists.txt
+          pushd liblsl
+          git diff CMakeLists.txt
+          popd
+
       - name: Configure
         run: >
           cmake
@@ -322,3 +334,5 @@ jobs:
 # [What's the difference between CMAKE_INSTALL_PREFIX and CMAKE_INSTALL_RPATH](https://stackoverflow.com/questions/32047805/whats-the-difference-between-cmake-install-prefix-and-cmake-install-rpath)
 # [why .so library become very big after compile with cmake?](https://stackoverflow.com/questions/47346448/why-so-library-become-very-big-after-compile-with-cmake)
 # https://brainflow.readthedocs.io/en/stable/BuildBrainFlow.html#compilation-using-android-ndk
+# [how to generate pdb files for Release build with cmake flags?](https://stackoverflow.com/questions/28178978/how-to-generate-pdb-files-for-release-build-with-cmake-flags)
+# https://github.com/microsoft/vcpkg/blob/ee2d2a100103e0f3613c60655dcf15be7d5157b8/scripts/toolchains/windows.cmake#L94
