@@ -1,8 +1,8 @@
 diff --git a/cmake/LSLCMake.cmake b/cmake/LSLCMake.cmake
-index f64b001b..0912a88f 100644
+index f64b001b..a9332b45 100644
 --- a/cmake/LSLCMake.cmake
 +++ b/cmake/LSLCMake.cmake
-@@ -167,20 +167,28 @@ function(installLSLApp target)
+@@ -167,31 +167,40 @@ function(installLSLApp target)
  		get_target_property(target_is_bundle ${target} MACOSX_BUNDLE)
  		set(APPLE_APP_PATH "\${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR}/${target}.app")
  	endif(APPLE)
@@ -11,8 +11,9 @@ index f64b001b..0912a88f 100644
 +	message(STATUS "DEPLOYMENT_TARGET: ${DEPLOYMENT_TARGET}")
 +	message(STATUS "CMAKE_OSX_ARCHITECTURES: ${CMAKE_OSX_ARCHITECTURES}")
 +	message(STATUS "APPLE_TARGET_TRIPLE: {APPLE_TARGET_TRIPLE}")
-+	message(STATUS "")
-+	message(STATUS "")
++	message(STATUS "APPLE: ${APPLE}")
++	message(STATUS "IOS: ${IOS}")
++	message(STATUS "target_is_bundle: ${target_is_bundle}")
 +	message(STATUS "================================================================================")
  	
  	# Copy lsl library. Logic is a bit complicated.
@@ -34,7 +35,11 @@ index f64b001b..0912a88f 100644
  				DESTINATION ${CMAKE_INSTALL_BINDIR}
  				COMPONENT ${SHAREDLIBCOMPONENT})
  		endif(APPLE AND target_is_bundle)
-@@ -191,7 +199,7 @@ function(installLSLApp target)
+-	endif(NOT TARGET liblsl AND NOT LSL_UNIXFOLDERS)
++	endif(NOT TARGET lsl AND NOT LSL_UNIXFOLDERS)
+ 	# Mac bundles need further fixup (mostly for 3rd party libs)
+ 	# Only use fixup_bundle for non-Qt, as it is too complicated to provide all Qt libs
+ 	#  to the third argument of fixup_bundle, especially when macdeployqt can do it for us.
  	if(APPLE AND target_is_bundle AND NOT qtapp)
  		install(CODE
  			"
