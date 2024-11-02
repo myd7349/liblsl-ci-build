@@ -66,5 +66,5 @@ jobs:
         run: |
           pushd build
           make lsl
-          make package
+          make install
           popd
