@@ -6,7 +6,7 @@ on:
     types: [ opened, ready_for_review, reopened, synchronize ]
 
 env:
-  LIBLSL_VERSION: 7e61a2e
+  LIBLSL_VERSION: v1.16.2
   BUILD_TYPE: Release
   INSTALL_PREFIX: install
 
