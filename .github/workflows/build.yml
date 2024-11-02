@@ -7,6 +7,7 @@ on:
 
 env:
   LIBLSL_VERSION: v1.16.2
+  LIBLSL_COMMIT: 7e61a2ef7a25a54b54968fb5c8776054f49b028e
   BUILD_TYPE: Release
   INSTALL_PREFIX: install
 
@@ -40,7 +41,7 @@ jobs:
         run: |
           git clone https://github.com/sccn/liblsl.git
           pushd liblsl
-          git checkout ${{ env.LIBLSL_VERSION }}
+          git checkout ${{ env.LIBLSL_COMMIT }}
           popd
 
       - name: Run uname
@@ -105,7 +106,7 @@ jobs:
         run: |
           git clone https://github.com/sccn/liblsl.git
           pushd liblsl
-          git checkout ${{ env.LIBLSL_VERSION }}
+          git checkout ${{ env.LIBLSL_COMMIT }}
           popd
 
       - name: Run uname
@@ -172,7 +173,7 @@ jobs:
         run: |
           git clone https://github.com/sccn/liblsl.git
           pushd liblsl
-          git checkout ${{ env.LIBLSL_VERSION }}
+          git checkout ${{ env.LIBLSL_COMMIT }}
           popd
 
       - name: Run uname
@@ -241,7 +242,7 @@ jobs:
         run: |
           git clone https://github.com/sccn/liblsl.git
           pushd liblsl
-          git checkout ${{ env.LIBLSL_VERSION }}
+          git checkout ${{ env.LIBLSL_COMMIT }}
           popd
 
       - name: Setup Python
