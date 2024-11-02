@@ -43,7 +43,7 @@ jobs:
         run: |
           git clone https://github.com/sccn/liblsl.git
           pushd liblsl
-          git checkout v1.16.2b1
+          git checkout ${{ env.LIBLSL_COMMIT }}
           popd
 
       - name: Run uname
@@ -52,6 +52,7 @@ jobs:
       - name: Configure
         run: >
           cmake
+          --debug-output
           -S liblsl
           -B build
           -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/toolchains/ios-cmake/ios.toolchain.cmake
