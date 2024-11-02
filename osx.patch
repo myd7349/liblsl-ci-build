@@ -1,0 +1,28 @@
+diff --git a/cmake/LSLCMake.cmake b/cmake/LSLCMake.cmake
+index f64b001b..08d59263 100644
+--- a/cmake/LSLCMake.cmake
++++ b/cmake/LSLCMake.cmake
+@@ -175,12 +175,12 @@ function(installLSLApp target)
+ 	if(NOT TARGET liblsl AND NOT LSL_UNIXFOLDERS)
+ 		if(APPLE AND target_is_bundle)
+ 			# Copy the dylib into the bundle
+-			install(FILES $<TARGET_FILE:LSL::lsl>
++			install(FILES $<TARGET_FILE:lsl>
+ 				DESTINATION ${CMAKE_INSTALL_BINDIR}/${target}.app/Contents/MacOS/
+ 				COMPONENT ${SHAREDLIBCOMPONENT})
+ 		else()
+ 			# Copy the dll/dylib/so next to the executable binary.
+-			install(FILES $<TARGET_FILE:LSL::lsl>
++			install(FILES $<TARGET_FILE:lsl>
+ 				DESTINATION ${CMAKE_INSTALL_BINDIR}
+ 				COMPONENT ${SHAREDLIBCOMPONENT})
+ 		endif(APPLE AND target_is_bundle)
+@@ -191,7 +191,7 @@ function(installLSLApp target)
+ 	if(APPLE AND target_is_bundle AND NOT qtapp)
+ 		install(CODE
+ 			"
+-				get_filename_component(LIBDIR $<TARGET_FILE:LSL::lsl> DIRECTORY)
++				get_filename_component(LIBDIR $<TARGET_FILE:lsl> DIRECTORY)
+ 				message(STATUS \${LIBDIR})
+ 				include(BundleUtilities)
+ 				set(BU_CHMOD_BUNDLE_ITEMS ON)

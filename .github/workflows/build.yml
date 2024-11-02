@@ -43,7 +43,8 @@ jobs:
         run: |
           git clone https://github.com/sccn/liblsl.git
           pushd liblsl
-          git checkout ${{ env.LIBLSL_VERSION }}
+          git checkout ${{ env.LIBLSL_COMMIT }}
+          git apply ${{ github.workspace }}/osx.patch
           popd
 
       - name: Run uname
