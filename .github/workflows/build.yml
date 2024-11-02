@@ -43,7 +43,7 @@ jobs:
         run: |
           git clone https://github.com/sccn/liblsl.git
           pushd liblsl
-          git checkout 1.13.0
+          git checkout 1.13.1
           popd
 
       - name: Run uname
