@@ -66,8 +66,7 @@ jobs:
       - name: Build & Install
         run: |
           pushd build
-          make lsl
-          make install
+          cmake --build build --target install --config Release -j
           popd
 
       - name: Run file command
