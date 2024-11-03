@@ -65,9 +65,7 @@ jobs:
 
       - name: Build & Install
         run: |
-          pushd build
           cmake --build build --target install --config Release -j
-          popd
 
       - name: Run file command
         run: file ./${{ env.INSTALL_PREFIX }}/lib/*
