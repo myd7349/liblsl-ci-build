@@ -63,15 +63,15 @@ jobs:
           -DLSL_BUILD_STATIC=OFF
           -DENABLE_STRICT_TRY_COMPILE=ON
 
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: liblsl-${{ env.LIBLSL_VERSION }}-${{ matrix.config.rid }}-config
+          path: build
+
       - name: Build & Install
         run: |
           cmake --build build --target install --config Release -j
 
       - name: Run file command
         run: file ./${{ env.INSTALL_PREFIX }}/lib/*
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: liblsl-${{ env.LIBLSL_VERSION }}-${{ matrix.config.rid }}
-          path: ${{ env.INSTALL_PREFIX }}
