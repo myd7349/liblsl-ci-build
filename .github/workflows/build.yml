@@ -75,3 +75,12 @@ jobs:
 
       - name: Run file command
         run: file ./${{ env.INSTALL_PREFIX }}/lib/*
+
+
+# References:
+# https://github.com/rust-skia/rust-skia/issues/466
+# https://github.com/rust-skia/rust-skia/pull/502/files
+# https://stackoverflow.com/questions/64830671/why-does-my-native-arm64-application-built-using-an-x86-64-build-system-fail-to
+# https://stackoverflow.com/questions/11875442/cmake-fixup-bundle-creating-empty-frameworks-on-os-x
+# https://stackoverflow.com/questions/31899386/cross-building-binutils-2-25-1-for-ios8-4-arm64-apple-darwin14-0-0
+# https://stackoverflow.com/questions/62406876/why-is-system-encoding-and-the-default-encoding-different-net-core
