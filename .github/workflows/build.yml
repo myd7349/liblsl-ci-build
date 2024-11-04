@@ -246,18 +246,6 @@ jobs:
           git checkout ${{ env.LIBLSL_COMMIT }}
           popd
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
-
-      - name: Patch CMakeLists.txt
-        run: |
-          python ${{ github.workspace }}/patch_cmakelists.py liblsl/CMakeLists.txt
-          pushd liblsl
-          git diff CMakeLists.txt
-          popd
-
       - name: Configure
         run: >
           cmake
