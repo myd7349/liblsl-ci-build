@@ -7,7 +7,6 @@ on:
 
 env:
   LIBLSL_VERSION: v1.16.2
-  LIBLSL_COMMIT: 7e61a2ef7a25a54b54968fb5c8776054f49b028e
   BUILD_TYPE: Release
   INSTALL_PREFIX: install
 
@@ -41,7 +40,7 @@ jobs:
         run: |
           git clone https://github.com/sccn/liblsl.git
           pushd liblsl
-          git checkout ${{ env.LIBLSL_COMMIT }}
+          git checkout ${{ env.LIBLSL_VERSION }}
           popd
 
       - name: Run uname
@@ -106,8 +105,7 @@ jobs:
         run: |
           git clone https://github.com/sccn/liblsl.git
           pushd liblsl
-          git checkout ${{ env.LIBLSL_COMMIT }}
-          git apply ${{ github.workspace }}/osx.patch
+          git checkout ${{ env.LIBLSL_VERSION }}
           popd
 
       - name: Run uname
@@ -174,7 +172,7 @@ jobs:
         run: |
           git clone https://github.com/sccn/liblsl.git
           pushd liblsl
-          git checkout ${{ env.LIBLSL_COMMIT }}
+          git checkout ${{ env.LIBLSL_VERSION }}
           popd
 
       - name: Run uname
@@ -243,7 +241,19 @@ jobs:
         run: |
           git clone https://github.com/sccn/liblsl.git
           pushd liblsl
-          git checkout ${{ env.LIBLSL_COMMIT }}
+          git checkout ${{ env.LIBLSL_VERSION }}
+          popd
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Patch CMakeLists.txt
+        run: |
+          python ${{ github.workspace }}/patch_cmakelists.py liblsl/CMakeLists.txt
+          pushd liblsl
+          git diff CMakeLists.txt
           popd
 
       - name: Configure
@@ -326,11 +336,3 @@ jobs:
 # https://brainflow.readthedocs.io/en/stable/BuildBrainFlow.html#compilation-using-android-ndk
 # [how to generate pdb files for Release build with cmake flags?](https://stackoverflow.com/questions/28178978/how-to-generate-pdb-files-for-release-build-with-cmake-flags)
 # https://github.com/microsoft/vcpkg/blob/ee2d2a100103e0f3613c60655dcf15be7d5157b8/scripts/toolchains/windows.cmake#L94
-# [CMP0087](https://cmake.org/cmake/help/latest/policy/CMP0087.html)
-# > Added in version 3.14.
-# CMake Error:
-#  Error evaluating generator expression:
-#
-#    $<TARGET_FILE:LSL::lsl>
-# In commit dfc81db275e725ea1329d02987ab88ec0c0c35b5, liblsl updates CMake minimal version 3.12 -> 3.16.
-# [macOS build universal binary 2 with CMake](https://stackoverflow.com/questions/65157483/macos-build-universal-binary-2-with-cmake)
