@@ -222,6 +222,9 @@ jobs:
       fail-fast: false
       matrix:
         config:
+          - rid: win-arm
+            arch: ARM
+
           - rid: win-arm64
             arch: ARM64
 
@@ -262,7 +265,7 @@ jobs:
           -S liblsl
           -B build
           -G "${{ matrix.generator }}"
-          -A ${{ matrix.config.arch }}
+          -A "${{ matrix.config.arch }},version=10.0.22621.0"
           -DLSL_BUILD_STATIC=OFF
           -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_PREFIX }}
 
@@ -304,6 +307,7 @@ jobs:
           7z a liblsl-${{ env.LIBLSL_VERSION }}-osx-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-osx/*
           7z a liblsl-${{ env.LIBLSL_VERSION }}-osx-arm64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-osx-arm64/*
           7z a liblsl-${{ env.LIBLSL_VERSION }}-osx-x64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-osx-x64/*
+          7z a liblsl-${{ env.LIBLSL_VERSION }}-win-arm-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-win-arm/*
           7z a liblsl-${{ env.LIBLSL_VERSION }}-win-arm64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-win-arm64/*
           7z a liblsl-${{ env.LIBLSL_VERSION }}-win-x64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-win-x64/*
           7z a liblsl-${{ env.LIBLSL_VERSION }}-win-x86-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-win-x86/*

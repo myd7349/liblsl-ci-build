@@ -31,6 +31,7 @@ macOS:
 
 Windows:
 
+- win-arm
 - win-arm64
 - win-x64
 - win-x86
