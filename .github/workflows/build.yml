@@ -264,6 +264,7 @@ jobs:
           -G "${{ matrix.generator }}"
           -A ${{ matrix.config.arch }}
           -DLSL_BUILD_STATIC=OFF
+          -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
           -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_PREFIX }}
           -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
 
