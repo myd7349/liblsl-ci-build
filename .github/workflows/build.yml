@@ -265,6 +265,7 @@ jobs:
           -A ${{ matrix.config.arch }}
           -DLSL_BUILD_STATIC=OFF
           -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_PREFIX }}
+          -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
 
       - name: Build & Install
         run: |
@@ -336,3 +337,4 @@ jobs:
 # https://brainflow.readthedocs.io/en/stable/BuildBrainFlow.html#compilation-using-android-ndk
 # [how to generate pdb files for Release build with cmake flags?](https://stackoverflow.com/questions/28178978/how-to-generate-pdb-files-for-release-build-with-cmake-flags)
 # https://github.com/microsoft/vcpkg/blob/ee2d2a100103e0f3613c60655dcf15be7d5157b8/scripts/toolchains/windows.cmake#L94
+# https://github.com/raylib-cs/raylib-cs/blob/master/Raylib-cs.Native/Raylib-cs.Native.csproj#L58
