@@ -86,6 +86,12 @@ jobs:
           - rid: ios-arm64
             os: OS64
 
+          - rid: iossimulator-arm64
+            os: SIMULATORARM64
+
+          - rid: iossimulator-x64
+            os: SIMULATOR64
+
           - rid: osx
             os: MAC_UNIVERSAL
 
@@ -300,6 +306,8 @@ jobs:
           7z a liblsl-${{ env.LIBLSL_VERSION }}-android-x64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-android-x64/*
           7z a liblsl-${{ env.LIBLSL_VERSION }}-android-x86-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-android-x86/*
           7z a liblsl-${{ env.LIBLSL_VERSION }}-ios-arm64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-ios-arm64/*
+          7z a liblsl-${{ env.LIBLSL_VERSION }}-iossimulator-arm64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-iossimulator-arm64/*
+          7z a liblsl-${{ env.LIBLSL_VERSION }}-iossimulator-x64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-iossimulator-x64/*
           7z a liblsl-${{ env.LIBLSL_VERSION }}-linux-arm-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-linux-arm/*
           7z a liblsl-${{ env.LIBLSL_VERSION }}-linux-arm64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-linux-arm64/*
           7z a liblsl-${{ env.LIBLSL_VERSION }}-linux-x64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-linux-x64/*

@@ -4,7 +4,7 @@ Automated CI/CD for building [liblsl](https://github.com/sccn/liblsl) dynamic li
 
 ## Used by SharpLSL
 
-During the [SharpLSL](https://github.com/myd7349/SharpLSL) packaging process, these liblsl binary archives are downloaded automatically and packaged into NuGet packages named SharpLSL.Native.[rid].
+During the [SharpLSL](https://github.com/myd7349/SharpLSL) packaging process, these liblsl binary archives are downloaded automatically and packaged into NuGet packages named SharpLSL.Native.[rid]. Here, `[rid]` represents the runtime identifier for the specific platform. For details on runtime identifiers, refer to the [RID catalog](https://learn.microsoft.com/en-us/dotnet/core/rid-catalog).
 
 Android:
 
@@ -16,6 +16,8 @@ Android:
 iOS:
 
 - ios-arm64
+- iossimulator-arm64
+- iossimulator-x64
 
 Linux:
 
