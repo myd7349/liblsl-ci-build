@@ -274,7 +274,6 @@ jobs:
           -A ${{ matrix.config.arch }}
           -DCMAKE_TOOLCHAIN_FILE="${{ github.workspace }}/toolchains/msvc_static_crt.cmake"
           -DLSL_BUILD_STATIC=OFF
-          -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
           -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_PREFIX }}
 
       - name: Build & Install
@@ -352,3 +351,6 @@ jobs:
 # https://github.com/raylib-cs/raylib-cs/blob/master/Raylib-cs.Native/Raylib-cs.Native.csproj#L58
 # [How to Force CMAKE_MSVC_RUNTIME_LIBRARY to be NON DEBUG for a dependency even in a debug build config](https://github.com/microsoft/vcpkg/discussions/43313)
 # [[bug] CMakeToolchain: CMAKE_MSVC_RUNTIME_LIBRARY needs policy CMP0091 NEW](https://github.com/conan-io/conan/issues/10239)
+# [[bug] The CMake policy CMP0091 must be NEW, but is ''](https://github.com/conan-io/conan/issues/15556)
+# > Passing -DCMAKE_BUILD_TYPE specially hardcoding it in the recipe is problematic, specially for Visual Studio generator. 
+# [[bug] CMake CMP0091 policy not applied by CMakeToolchain](https://github.com/conan-io/conan/issues/12458)
