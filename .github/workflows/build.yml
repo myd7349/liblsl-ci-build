@@ -269,10 +269,10 @@ jobs:
           -B build
           -G "${{ matrix.generator }}"
           -A ${{ matrix.config.arch }}
+          -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/toolchains/msvc_static_crt.cmake
           -DLSL_BUILD_STATIC=OFF
           -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
           -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_PREFIX }}
-          -DCMAKE_MSVC_RUNTIME_LIBRARY="MultiThreaded$<$<CONFIG:Debug>:Debug>"
 
       - name: Build & Install
         run: |
