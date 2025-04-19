@@ -262,6 +262,9 @@ jobs:
           git diff CMakeLists.txt
           popd
 
+      - name: Print CMake version
+        run: cmake --version
+
       - name: Configure
         run: >
           cmake
@@ -269,7 +272,7 @@ jobs:
           -B build
           -G "${{ matrix.generator }}"
           -A ${{ matrix.config.arch }}
-          -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/toolchains/msvc_static_crt.cmake
+          -DCMAKE_TOOLCHAIN_FILE="${{ github.workspace }}/toolchains/msvc_static_crt.cmake"
           -DLSL_BUILD_STATIC=OFF
           -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
           -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_PREFIX }}
@@ -347,3 +350,5 @@ jobs:
 # [how to generate pdb files for Release build with cmake flags?](https://stackoverflow.com/questions/28178978/how-to-generate-pdb-files-for-release-build-with-cmake-flags)
 # https://github.com/microsoft/vcpkg/blob/ee2d2a100103e0f3613c60655dcf15be7d5157b8/scripts/toolchains/windows.cmake#L94
 # https://github.com/raylib-cs/raylib-cs/blob/master/Raylib-cs.Native/Raylib-cs.Native.csproj#L58
+# [How to Force CMAKE_MSVC_RUNTIME_LIBRARY to be NON DEBUG for a dependency even in a debug build config](https://github.com/microsoft/vcpkg/discussions/43313)
+# [[bug] CMakeToolchain: CMAKE_MSVC_RUNTIME_LIBRARY needs policy CMP0091 NEW](https://github.com/conan-io/conan/issues/10239)
