@@ -354,3 +354,6 @@ jobs:
 # [[bug] The CMake policy CMP0091 must be NEW, but is ''](https://github.com/conan-io/conan/issues/15556)
 # > Passing -DCMAKE_BUILD_TYPE specially hardcoding it in the recipe is problematic, specially for Visual Studio generator. 
 # [[bug] CMake CMP0091 policy not applied by CMakeToolchain](https://github.com/conan-io/conan/issues/12458)
+# [How can cmake_minimum_required required version impact generated files?](https://stackoverflow.com/questions/73474859/how-can-cmake-minimum-required-required-version-impact-generated-files)
+# > set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug,MyDebug>:Debug>DLL" CACHE STRING "Rule for selecting MSVC runtime")
+# liblsl v1.16.2 is still using cmake_minimum_required (VERSION 3.12), so set CMAKE_MSVC_RUNTIME_LIBRARY won't work.
