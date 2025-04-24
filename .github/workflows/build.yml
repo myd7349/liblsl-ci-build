@@ -37,13 +37,13 @@ jobs:
         if: matrix.setup_vcpkg == true
         run: |
           vcpkg integrate install
-          vcpkg install boost-intrusive
+          vcpkg install boost-smart-ptr
 
       - name: Revert 07ba6a7
         if: matrix.revert_commit == true
         run: |
           pushd liblsl
-          git revert 07ba6a7 --no-edit
+          git apply ${{ github.workspace }}\remove-system.patch
           popd
 
       - name: Configure
