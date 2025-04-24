@@ -1,3 +1,12 @@
+From 4cc86ec5e3c3c8d33dd05c60cee56db757e73a5c Mon Sep 17 00:00:00 2001
+From: myd7349 <myd7349@gmail.com>
+Date: Thu, 24 Apr 2025 22:54:21 +0800
+Subject: [PATCH] Fix #233
+
+---
+ CMakeLists.txt | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
+
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 index f86958f7..8260d2fc 100644
 --- a/CMakeLists.txt
@@ -35,3 +44,6 @@ index f86958f7..8260d2fc 100644
  		$<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/thirdparty/loguru>
  		$<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/thirdparty/asio>
  )
+-- 
+2.47.0.windows.2
+
