@@ -11,40 +11,31 @@ env:
 
 jobs:
   build-windows:
-    name: build-${{ matrix.setup_vcpkg }}-${{ matrix.revert_commit }}
+    name: build-with-vcpkg(${{ matrix.setup_vcpkg }})
     runs-on: windows-latest
     strategy:
       fail-fast: false
       matrix:
         include:
           - setup_vcpkg: false
-            revert_commit: false
-
           - setup_vcpkg: true
-            revert_commit: false
-
-          - setup_vcpkg: true
-            revert_commit: true
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Clone liblsl
-        run: git clone https://github.com/sccn/liblsl.git
+        run: |
+          git clone https://github.com/sccn/liblsl.git
+          pushd liblsl
+          git checkout ec8e8de784cee97379508fb05baf203480930690
+          popd
 
       - name: Setup vcpkg
         if: matrix.setup_vcpkg == true
         run: |
           vcpkg integrate install
           vcpkg install boost-smart-ptr
-
-      - name: Revert 07ba6a7
-        if: matrix.revert_commit == true
-        run: |
-          pushd liblsl
-          git apply ${{ github.workspace }}\remove-system.patch
-          popd
 
       - name: Configure
         run: >
