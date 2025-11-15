@@ -15,8 +15,8 @@ def replace_in_file(file_path, encoding, replacements):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage:\n  python patch_cmakelists.py <cmakelists_file_path>")
+    if len(sys.argv) != 3:
+        print("Usage:\n  python patch_cmakelists.py <cmakelists_file_path> <crt>")
         sys.exit(1)
 
     file_path = sys.argv[1]
@@ -60,6 +60,12 @@ endif()
 include(cmake/LSLCMake.cmake)""",
         ),
     ]
+
+    if sys.argv[2] == 'MT':
+        print("Build with /MT option.")
+    else:
+        print("Build with /MD option.")
+        replacements = replacements[1:]
 
     try:
         replace_in_file(file_path, 'utf-8', replacements)

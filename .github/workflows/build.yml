@@ -313,9 +313,8 @@ jobs:
           python-version: '3.10'
 
       - name: Patch CMakeLists.txt
-        if: ${{ matrix.config.crt == 'MT' }}
         run: |
-          python ${{ github.workspace }}/patch_cmakelists.py liblsl/CMakeLists.txt
+          python ${{ github.workspace }}/patch_cmakelists.py liblsl/CMakeLists.txt ${{ matrix.config.crt }}
           pushd liblsl
           git diff CMakeLists.txt
           popd
