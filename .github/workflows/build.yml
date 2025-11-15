@@ -272,12 +272,27 @@ jobs:
         config:
           - rid: win-arm64
             arch: ARM64
+            crt: MD
+
+          - rid: win-arm64-mt
+            arch: ARM64
+            crt: MT
 
           - rid: win-x64
             arch: x64
+            crt: MD
+
+          - rid: win-x64-mt
+            arch: x64
+            crt: MT
 
           - rid: win-x86
             arch: Win32
+            crt: MD
+
+          - rid: win-x86-mt
+            arch: Win32
+            crt: MT
         include:
           - generator: Visual Studio 17 2022
 
@@ -298,6 +313,7 @@ jobs:
           python-version: '3.10'
 
       - name: Patch CMakeLists.txt
+        if: ${{ matrix.config.crt == 'MT' }}
         run: |
           python ${{ github.workspace }}/patch_cmakelists.py liblsl/CMakeLists.txt
           pushd liblsl
@@ -359,8 +375,11 @@ jobs:
           7z a liblsl-${{ env.LIBLSL_VERSION }}-osx-arm64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-osx-arm64/*
           7z a liblsl-${{ env.LIBLSL_VERSION }}-osx-x64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-osx-x64/*
           7z a liblsl-${{ env.LIBLSL_VERSION }}-win-arm64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-win-arm64/*
+          7z a liblsl-${{ env.LIBLSL_VERSION }}-win-arm64-dynamic-mt.zip ./liblsl-${{ env.LIBLSL_VERSION }}-win-arm64-mt/*
           7z a liblsl-${{ env.LIBLSL_VERSION }}-win-x64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-win-x64/*
+          7z a liblsl-${{ env.LIBLSL_VERSION }}-win-x64-dynamic-mt.zip ./liblsl-${{ env.LIBLSL_VERSION }}-win-x64-mt/*
           7z a liblsl-${{ env.LIBLSL_VERSION }}-win-x86-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-win-x86/*
+          7z a liblsl-${{ env.LIBLSL_VERSION }}-win-x86-dynamic-mt.zip ./liblsl-${{ env.LIBLSL_VERSION }}-win-x86-mt/*
 
       - name: Release
         uses: softprops/action-gh-release@v2
