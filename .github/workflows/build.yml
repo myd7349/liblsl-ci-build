@@ -34,7 +34,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Clone liblsl
         run: |
@@ -69,7 +69,7 @@ jobs:
         run: file ./${{ env.INSTALL_PREFIX }}/lib/*
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: liblsl-${{ env.LIBLSL_VERSION }}-${{ matrix.config.rid }}
           path: ${{ env.INSTALL_PREFIX }}
@@ -103,7 +103,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           submodules: true
 
@@ -144,7 +144,7 @@ jobs:
         run: file ./${{ env.INSTALL_PREFIX }}/lib/*
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: liblsl-${{ env.LIBLSL_VERSION }}-${{ matrix.config.rid }}
           path: ${{ env.INSTALL_PREFIX }}
@@ -168,7 +168,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Clone liblsl
         run: |
@@ -210,7 +210,7 @@ jobs:
         run: file ./${{ env.INSTALL_PREFIX }}/lib/*
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: liblsl-${{ env.LIBLSL_VERSION }}-${{ matrix.config.rid }}
           path: ${{ env.INSTALL_PREFIX }}
@@ -225,7 +225,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Clone liblsl
         run: |
@@ -256,7 +256,7 @@ jobs:
         run: file ./${{ env.INSTALL_PREFIX }}/lib/*
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: liblsl-${{ env.LIBLSL_VERSION }}-linux-arm64
           path: ${{ env.INSTALL_PREFIX }}
@@ -298,7 +298,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Clone liblsl
         run: |
@@ -308,7 +308,7 @@ jobs:
           popd
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.10'
 
@@ -338,7 +338,7 @@ jobs:
           cmake --build build --config ${{ env.BUILD_TYPE }} --target install
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: liblsl-${{ env.LIBLSL_VERSION }}-${{ matrix.config.rid }}
           path: ${{ env.INSTALL_PREFIX }}
@@ -350,7 +350,7 @@ jobs:
 
     steps:
       - name: Download artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
 
       - name: List downloaded files
         run: ls -R
@@ -376,9 +376,9 @@ jobs:
           7z a liblsl-${{ env.LIBLSL_VERSION }}-win-arm64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-win-arm64/*
           7z a liblsl-${{ env.LIBLSL_VERSION }}-win-arm64-dynamic-mt.zip ./liblsl-${{ env.LIBLSL_VERSION }}-win-arm64-mt/*
           7z a liblsl-${{ env.LIBLSL_VERSION }}-win-x64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-win-x64/*
-          7z a liblsl-${{ env.LIBLSL_VERSION }}-win-x64-dynamic-mt.zip ./liblsl-${{ env.LIBLSL_VERSION }}-win-x64-mt/*
+          7z a liblsl-${{ env.LIBLSL_VERSION }}-win-x64-mt-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-win-x64-mt/*
           7z a liblsl-${{ env.LIBLSL_VERSION }}-win-x86-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-win-x86/*
-          7z a liblsl-${{ env.LIBLSL_VERSION }}-win-x86-dynamic-mt.zip ./liblsl-${{ env.LIBLSL_VERSION }}-win-x86-mt/*
+          7z a liblsl-${{ env.LIBLSL_VERSION }}-win-x86-mt-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-win-x86-mt/*
 
       - name: Release
         uses: softprops/action-gh-release@v2
