@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - dev
+      - fix-bundle
   pull_request:
     types: [ opened, ready_for_review, reopened, synchronize ]
   release:
@@ -118,7 +119,6 @@ jobs:
           git clone https://github.com/sccn/liblsl.git
           pushd liblsl
           git checkout ${{ env.LIBLSL_VERSION }}
-          git apply ../fix-bundle.patch
           popd
 
       - name: Run uname
@@ -138,9 +138,7 @@ jobs:
 
       - name: Build & Install
         run: |
-          pushd build
-          make install
-          popd
+          cmake --build build --target install
 
       - name: Run file command
         run: file ./${{ env.INSTALL_PREFIX }}/lib/*
