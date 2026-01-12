@@ -129,7 +129,7 @@ jobs:
           cmake
           -S liblsl
           -B build
-          -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/toolchains/ios-cmake/ios.toolchain.cmake
+          -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/liblsl/cmake/ios.toolchain.cmake
           -DPLATFORM=${{ matrix.os }}
           -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
           -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_PREFIX }}
