@@ -134,7 +134,7 @@ jobs:
           -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
           -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_PREFIX }}
           -DLSL_BUILD_STATIC=OFF
-          -DLSL_FRAMEWORK=OFF
+          -DLSL_FRAMEWORK=ON
 
       - name: Build & Install
         run: |
