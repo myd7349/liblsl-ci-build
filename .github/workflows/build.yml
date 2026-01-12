@@ -135,6 +135,7 @@ jobs:
           -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_PREFIX }}
           -DLSL_BUILD_STATIC=OFF
           -DLSL_FRAMEWORK=ON
+          -DCMAKE_MACOSX_BUNDLE=OFF
 
       - name: Build & Install
         run: |
