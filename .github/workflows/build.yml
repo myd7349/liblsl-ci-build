@@ -5,7 +5,6 @@ on:
     branches:
       - main
       - dev
-      - fix-bundle
   pull_request:
     types: [ opened, ready_for_review, reopened, synchronize ]
   release:
@@ -133,9 +132,9 @@ jobs:
           -DPLATFORM=${{ matrix.os }}
           -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
           -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_PREFIX }}
-          -DLSL_BUILD_STATIC=OFF
-          -DLSL_FRAMEWORK=ON
           -DCMAKE_MACOSX_BUNDLE=OFF
+          -DLSL_BUILD_STATIC=OFF
+          -DLSL_FRAMEWORK=OFF
 
       - name: Build & Install
         run: |
@@ -312,16 +311,11 @@ jobs:
           git checkout ${{ env.LIBLSL_VERSION }}
           popd
 
-      - name: Setup Python
-        uses: actions/setup-python@v6
-        with:
-          python-version: '3.13'
-
-      - name: Patch CMakeLists.txt
+      - name: Patch
         run: |
-          python ${{ github.workspace }}/patch_cmakelists.py liblsl/CMakeLists.txt ${{ matrix.crt }}
           pushd liblsl
-          git diff CMakeLists.txt
+          git apply ${{ github.workspace }}/msvc_pdb.patch
+          git diff
           popd
 
       - name: Print CMake version
@@ -334,9 +328,9 @@ jobs:
           -B build
           -G "Visual Studio 17 2022"
           -A ${{ matrix.arch }}
-          -DCMAKE_TOOLCHAIN_FILE="${{ github.workspace }}/toolchains/msvc_static_crt.cmake"
           -DLSL_BUILD_STATIC=OFF
           -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_PREFIX }}
+          ${{ matrix.crt == 'MT' && '-DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded$<$<CONFIG:Debug>:Debug>' || '-DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded$<$<CONFIG:Debug>:Debug>DLL' }}
 
       - name: Build & Install
         run: |
