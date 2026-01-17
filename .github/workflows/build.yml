@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
 
 env:
-  LIBLSL_VERSION: v1.17.4
+  LIBLSL_VERSION: v1.17.5
   BUILD_TYPE: Release
   INSTALL_PREFIX: install
 
