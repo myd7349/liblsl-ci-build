@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - dev
+      - musl-c
   pull_request:
     types: [ opened, ready_for_review, reopened, synchronize ]
   release:
@@ -264,6 +265,74 @@ jobs:
           name: liblsl-${{ env.LIBLSL_VERSION }}-linux-arm64
           path: ${{ env.INSTALL_PREFIX }}
 
+  build-linux-musl:
+    name: build-${{ matrix.rid }}
+    if: >-
+      github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - rid: linux-musl-arm64
+            arch: arm64
+
+          - rid: linux-musl-x64
+            arch: x64
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Clone liblsl
+        run: |
+          git clone https://github.com/sccn/liblsl.git
+          pushd liblsl
+          git checkout ${{ env.LIBLSL_VERSION }}
+          popd
+
+      - name: Set up QEMU
+        if: ${{ matrix.arch == 'arm64' }}
+        uses: docker/setup-qemu-action@v4
+
+      - name: Pull Alpine image
+        run: |
+          if [ "${{ matrix.arch }}" = "arm64" ]; then
+            docker pull --platform linux/arm64 arm64v8/alpine
+          else
+            docker pull alpine:latest
+          fi
+
+      - name: Install toolchains & build
+        run: |
+          docker run --rm \
+            ${{ matrix.arch == 'arm64' && '--platform linux/arm64' || '' }} \
+            -v ${{ github.workspace }}:/work \
+            -w /work \
+            ${{ matrix.arch == 'arm64' && 'arm64v8/alpine' || 'alpine:latest' }} \
+            sh -euxc "
+              apk update &&
+              apk add --no-cache \
+                build-base \
+                cmake \
+                linux-headers
+              cmake \
+                -S liblsl \
+                -B build \
+                -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }} \
+                -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_PREFIX }} \
+                -DLSL_BUILD_STATIC=OFF
+              cd build
+              make install
+              cd ..
+            "
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v6
+        with:
+          name: liblsl-${{ env.LIBLSL_VERSION }}-${{ matrix.rid }}
+          path: ${{ env.INSTALL_PREFIX }}
+
   build-windows:
     name: build-${{ matrix.rid }}
     if: >-
@@ -354,6 +423,7 @@ jobs:
       - build-apple
       - build-linux
       - build-linux-arm64
+      - build-linux-musl
       - build-windows
     permissions:
       contents: write
@@ -379,6 +449,8 @@ jobs:
           7z a liblsl-${{ env.LIBLSL_VERSION }}-iossimulator-x64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-iossimulator-x64/*
           7z a liblsl-${{ env.LIBLSL_VERSION }}-linux-arm-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-linux-arm/*
           7z a liblsl-${{ env.LIBLSL_VERSION }}-linux-arm64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-linux-arm64/*
+          7z a liblsl-${{ env.LIBLSL_VERSION }}-linux-musl-arm64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-linux-musl-arm64/*
+          7z a liblsl-${{ env.LIBLSL_VERSION }}-linux-musl-x64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-linux-musl-x64/*
           7z a liblsl-${{ env.LIBLSL_VERSION }}-linux-x64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-linux-x64/*
           7z a liblsl-${{ env.LIBLSL_VERSION }}-osx-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-osx/*
           7z a liblsl-${{ env.LIBLSL_VERSION }}-osx-arm64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-osx-arm64/*
