@@ -11,6 +11,9 @@ on:
     types: [ published ]
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 env:
   LIBLSL_VERSION: v1.17.5
   BUILD_TYPE: Release
@@ -352,6 +355,8 @@ jobs:
       - build-linux
       - build-linux-arm64
       - build-windows
+    permissions:
+      contents: write
 
     steps:
       - name: Download artifacts
