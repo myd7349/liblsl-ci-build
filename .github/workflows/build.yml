@@ -5,7 +5,6 @@ on:
     branches:
       - main
       - dev
-      - musl-c
   pull_request:
     types: [ opened, ready_for_review, reopened, synchronize ]
   release:
@@ -321,7 +320,8 @@ jobs:
                 -B build \
                 -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }} \
                 -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_PREFIX }} \
-                -DLSL_BUILD_STATIC=OFF
+                -DLSL_BUILD_STATIC=OFF \
+                -DLSL_OPTIMIZATIONS=OFF
               cd build
               make install
               cd ..
@@ -499,3 +499,10 @@ jobs:
 # [How can cmake_minimum_required required version impact generated files?](https://stackoverflow.com/questions/73474859/how-can-cmake-minimum-required-required-version-impact-generated-files)
 # > set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug,MyDebug>:Debug>DLL" CACHE STRING "Rule for selecting MSVC runtime")
 # liblsl v1.16.2 is still using cmake_minimum_required (VERSION 3.12), so set CMAKE_MSVC_RUNTIME_LIBRARY won't work.
+# https://github.com/ibireme/yyjson/blob/de7abc1aede96d4a968a9e668524b1aad4df4258/.github/workflows/compilers.yml#L262
+# https://github.com/pybind/pybind11/issues/1650
+# > This is a compiler bug.
+# >
+# > https://gitlab.alpinelinux.org/alpine/aports/issues/8626
+# > (Disabling LTO or lowering the optimization level should allow you to compile the tests.)
+# https://cmake.org/cmake/help/latest/variable/CMAKE_LANG_FLAGS.html
