@@ -264,6 +264,78 @@ jobs:
           name: liblsl-${{ env.LIBLSL_VERSION }}-linux-arm64
           path: ${{ env.INSTALL_PREFIX }}
 
+  build-linux-loongarch64:
+    name: build-linux-loongarch64
+    if: >-
+      github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        toolchain-version:
+          - "2023.08.08"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Clone liblsl
+        run: |
+          git clone https://github.com/sccn/liblsl.git
+          pushd liblsl
+          git checkout ${{ env.LIBLSL_VERSION }}
+          popd
+
+      - name: Run uname
+        run: uname -m
+
+      - uses: actions/cache/restore@v5
+        id: restore-cache
+        with:
+          path: /opt/cross-tools
+          key: loongarch64-${{ matrix.toolchain-version }}
+
+      - name: Install LoongArch64 toolchain
+        if: ${{ !steps.restore-cache.outputs.cache-hit }}
+        run: |
+          url="https://github.com/loongson/build-tools/releases/download/${{ matrix.toolchain-version }}/x86_64-cross-tools-loongarch64-gcc-libc.tar.xz"
+          wget -nv "$url" -O /tmp/toolchain.tar.xz
+          mkdir -p /opt
+          tar -C /opt -x -f /tmp/toolchain.tar.xz
+
+      - uses: actions/cache/save@v5
+        if: ${{ !steps.restore-cache.outputs.cache-hit }}
+        with:
+          path: /opt/cross-tools
+          key: loongarch64-${{ matrix.toolchain-version }}
+
+      - name: Setup Loongarch64 build environment
+        run: |
+          echo "/opt/cross-tools/bin" >> $GITHUB_PATH
+          echo "CC=loongarch64-unknown-linux-gnu-gcc" >> $GITHUB_ENV
+          echo "CXX=loongarch64-unknown-linux-gnu-g++" >> $GITHUB_ENV
+
+      - name: Configure
+        run: >
+          cmake
+          -S liblsl
+          -B build
+          -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
+          -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_PREFIX }}
+          -DLSL_BUILD_STATIC=OFF
+
+      - name: Build & Install
+        run: |
+          pushd build
+          make install
+          popd
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: liblsl-${{ env.LIBLSL_VERSION }}-linux-loongarch64
+          path: ${{ env.INSTALL_PREFIX }}
+
   build-linux-musl:
     name: build-${{ matrix.rid }}
     if: >-
@@ -449,6 +521,7 @@ jobs:
           7z a liblsl-${{ env.LIBLSL_VERSION }}-iossimulator-x64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-iossimulator-x64/*
           7z a liblsl-${{ env.LIBLSL_VERSION }}-linux-arm-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-linux-arm/*
           7z a liblsl-${{ env.LIBLSL_VERSION }}-linux-arm64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-linux-arm64/*
+          7z a liblsl-${{ env.LIBLSL_VERSION }}-linux-loongarch64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-linux-loongarch64/*
           7z a liblsl-${{ env.LIBLSL_VERSION }}-linux-musl-arm64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-linux-musl-arm64/*
           7z a liblsl-${{ env.LIBLSL_VERSION }}-linux-musl-x64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-linux-musl-x64/*
           7z a liblsl-${{ env.LIBLSL_VERSION }}-linux-x64-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-linux-x64/*
