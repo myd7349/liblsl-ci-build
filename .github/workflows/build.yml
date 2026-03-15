@@ -328,7 +328,7 @@ jobs:
             "
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: liblsl-${{ env.LIBLSL_VERSION }}-${{ matrix.rid }}
           path: ${{ env.INSTALL_PREFIX }}
