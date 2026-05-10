@@ -279,8 +279,12 @@ jobs:
           -S liblsl
           -B build
           -G Ninja
+          -DCMAKE_C_COMPILER=loongarch64-unknown-linux-gnu-gcc
+          -DCMAKE_CXX_COMPILER=loongarch64-unknown-linux-gnu-g++
           -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
+          -DCMAKE_EXE_LINKER_FLAGS=-lstdc++
           -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_PREFIX }}
+          -DCMAKE_SHARED_LINKER_FLAGS=-lstdc++
           -DLSL_BUILD_STATIC=OFF
           -DLSL_OPTIMIZATIONS=OFF
 
@@ -456,7 +460,7 @@ jobs:
       - build-android
       - build-apple
       - build-linux
-      - linux-loongarch64
+      - build-linux-loongarch64
       - build-linux-musl
       - build-windows
     permissions:
