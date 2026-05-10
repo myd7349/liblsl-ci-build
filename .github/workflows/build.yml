@@ -230,11 +230,8 @@ jobs:
     if: >-
       github.event.pull_request.draft == false
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        toolchain-version:
-          - "2023.08.08"
+    env:
+      TOOLCHAIN_VERSION: "2023.08.08"
 
     steps:
       - name: Checkout
@@ -254,12 +251,12 @@ jobs:
         id: restore-cache
         with:
           path: /opt/cross-tools
-          key: loongarch64-${{ matrix.toolchain-version }}
+          key: loongarch64-${{ env.TOOLCHAIN_VERSION }}
 
       - name: Install LoongArch64 toolchain
         if: ${{ !steps.restore-cache.outputs.cache-hit }}
         run: |
-          url="https://github.com/loongson/build-tools/releases/download/${{ matrix.toolchain-version }}/x86_64-cross-tools-loongarch64-gcc-libc.tar.xz"
+          url="https://github.com/loongson/build-tools/releases/download/${{ env.TOOLCHAIN_VERSION }}/x86_64-cross-tools-loongarch64-gcc-libc.tar.xz"
           wget -nv "$url" -O /tmp/toolchain.tar.xz
           mkdir -p /opt
           tar -C /opt -x -f /tmp/toolchain.tar.xz
@@ -268,7 +265,7 @@ jobs:
         if: ${{ !steps.restore-cache.outputs.cache-hit }}
         with:
           path: /opt/cross-tools
-          key: loongarch64-${{ matrix.toolchain-version }}
+          key: loongarch64-${{ env.TOOLCHAIN_VERSION }}
 
       - name: Setup Loongarch64 build environment
         run: |
