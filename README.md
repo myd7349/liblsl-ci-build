@@ -25,6 +25,7 @@ Supported platforms:
 
 - linux-arm
 - linux-arm64
+- linux-loongarch64
 - linux-musl-arm64
 - linux-musl-x64
 - linux-x64
