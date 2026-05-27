@@ -4,7 +4,7 @@ Automated CI/CD pipelines for building [liblsl](https://github.com/sccn/liblsl) 
 
 ## Used by SharpLSL
 
-During the packaging process of [SharpLSL](https://github.com/myd7349/SharpLSL), these liblsl binary archives are automatically downloaded and bundled into NuGet packages named `SharpLSL.Native.[RID]`, where `[RID]` represents the runtime identifier of the specific platform. For more information on runtime identifiers, see the official [RID catalog](https://learn.microsoft.com/en-us/dotnet/core/rid-catalog).
+During the packaging process of [SharpLSL](https://github.com/SharpLSL/SharpLSL), these liblsl binary archives are automatically downloaded and bundled into NuGet packages named `SharpLSL.Native.[RID]`, where `[RID]` represents the runtime identifier of the specific platform. For more information on runtime identifiers, see the official [RID catalog](https://learn.microsoft.com/en-us/dotnet/core/rid-catalog).
 
 Supported platforms:
 
