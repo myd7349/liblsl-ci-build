@@ -15,7 +15,7 @@ permissions:
   contents: read
 
 env:
-  LIBLSL_VERSION: v1.17.6
+  LIBLSL_VERSION: v1.17.7
   BUILD_TYPE: Release
   INSTALL_PREFIX: install
 
