@@ -43,7 +43,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.3
 
       - name: Clone liblsl
         run: |
@@ -111,7 +111,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.3
         with:
           submodules: true
 
@@ -175,7 +175,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.3
 
       - name: Clone liblsl
         run: |
@@ -235,7 +235,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.3
 
       - name: Clone liblsl
         run: |
@@ -322,7 +322,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.3
 
       - name: Clone liblsl
         run: |
@@ -395,29 +395,29 @@ jobs:
             arch: ARM64
             crt: MT
 
-          - os: windows-latest
+          - os: windows-2022
             rid: win-x64
             arch: x64
             crt: MD
 
-          - os: windows-latest
+          - os: windows-2022
             rid: win-x64-mt
             arch: x64
             crt: MT
 
-          - os: windows-latest
+          - os: windows-2022
             rid: win-x86
             arch: Win32
             crt: MD
 
-          - os: windows-latest
+          - os: windows-2022
             rid: win-x86-mt
             arch: Win32
             crt: MT
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.3
 
       - name: Clone liblsl
         run: |
