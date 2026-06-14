@@ -395,22 +395,22 @@ jobs:
             arch: ARM64
             crt: MT
 
-          - os: windows-latest
+          - os: windows-2022
             rid: win-x64
             arch: x64
             crt: MD
 
-          - os: windows-latest
+          - os: windows-2022
             rid: win-x64-mt
             arch: x64
             crt: MT
 
-          - os: windows-latest
+          - os: windows-2022
             rid: win-x86
             arch: Win32
             crt: MD
 
-          - os: windows-latest
+          - os: windows-2022
             rid: win-x86-mt
             arch: Win32
             crt: MT
