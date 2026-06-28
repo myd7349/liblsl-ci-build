@@ -43,7 +43,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.3
+        uses: actions/checkout@v7.0.0
 
       - name: Clone liblsl
         run: |
@@ -111,7 +111,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.3
+        uses: actions/checkout@v7.0.0
         with:
           submodules: true
 
@@ -175,7 +175,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.3
+        uses: actions/checkout@v7.0.0
 
       - name: Clone liblsl
         run: |
@@ -235,7 +235,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.3
+        uses: actions/checkout@v7.0.0
 
       - name: Clone liblsl
         run: |
@@ -254,7 +254,7 @@ jobs:
       - name: Run uname
         run: uname -m
 
-      - uses: actions/cache/restore@v5
+      - uses: actions/cache/restore@v5.0.5
         id: restore-cache
         with:
           path: /opt/cross-tools
@@ -268,7 +268,7 @@ jobs:
           mkdir -p /opt
           tar -C /opt -x -f /tmp/toolchain.tar.xz
 
-      - uses: actions/cache/save@v5
+      - uses: actions/cache/save@v5.0.5
         if: ${{ !steps.restore-cache.outputs.cache-hit }}
         with:
           path: /opt/cross-tools
@@ -322,7 +322,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.3
+        uses: actions/checkout@v7.0.0
 
       - name: Clone liblsl
         run: |
@@ -417,7 +417,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6.0.3
+        uses: actions/checkout@v7.0.0
 
       - name: Clone liblsl
         run: |
