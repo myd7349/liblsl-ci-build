@@ -268,7 +268,7 @@ jobs:
           mkdir -p /opt
           tar -C /opt -x -f /tmp/toolchain.tar.xz
 
-      - uses: actions/cache/save@vv6.1.0
+      - uses: actions/cache/save@v6.1.0
         if: ${{ !steps.restore-cache.outputs.cache-hit }}
         with:
           path: /opt/cross-tools
