@@ -507,7 +507,7 @@ jobs:
           7z a liblsl-${{ env.LIBLSL_VERSION }}-win-x86-mt-dynamic.zip ./liblsl-${{ env.LIBLSL_VERSION }}-win-x86-mt/*
 
       - name: Release
-        uses: softprops/action-gh-release@v3
+        uses: softprops/action-gh-release@v3.0.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
